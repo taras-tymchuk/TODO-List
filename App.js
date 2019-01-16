@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import TopPannel from 'ToDoProject/Components/TopPannel';
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <TopPannel text="kjadfhlk;ljf"></TopPannel>
       </View>
     );
   }
@@ -14,8 +15,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'blanchedalmond',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 });
