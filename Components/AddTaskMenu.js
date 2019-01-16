@@ -4,19 +4,35 @@ import { View, TextInput, TouchableOpacity, StyleSheet, Text, KeyboardAvoidingVi
 export default class AddTaskMenu extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            text: '',
+        }
+    }
 
+    submitAndClear = () => {
+        //this.props.writeText(this.state.text);
+
+        this.setState({
+            text: ''
+        });
     }
 
     render() {
         return (
             <KeyboardAvoidingView behavior="padding" enabled style={styles.taskMenu}>
                 <View style={styles.textInputContainer}>
-                    <TextInput placeholder="Enter new task..."
-                        style={{ fontSize: 14 }}></TextInput>
+                    <TextInput
+                        style={{ fontSize: 14 }}
+                        onChangeText={(text) => this.setState({ text })}
+                        value={this.state.text}
+                        placeholder="Enter new task..."
+                        clearButtonMode="always"
+                    />
                 </View>
                 <View style={styles.addButtonContainer}>
                     <TouchableOpacity
-                        style={styles.addButton}>
+                        style={styles.addButton}
+                        onPress={this.submitAndClear}>
                         <Text style={{ fontSize: 20, color: "#fff" }}>+</Text>
                     </TouchableOpacity>
                 </View>
