@@ -10,7 +10,7 @@ export default class AddTaskMenu extends Component {
     }
 
     submitAndClear = () => {
-        //this.props.writeText(this.state.text);
+        this.props.onTaskAdded(this.state.text);
 
         this.setState({
             text: ''
@@ -19,7 +19,7 @@ export default class AddTaskMenu extends Component {
 
     render() {
         return (
-            <KeyboardAvoidingView behavior="padding" enabled style={styles.taskMenu}>
+            <View style={styles.container}>
                 <View style={styles.textInputContainer}>
                     <TextInput
                         style={{ fontSize: 14 }}
@@ -36,20 +36,15 @@ export default class AddTaskMenu extends Component {
                         <Text style={{ fontSize: 20, color: "#fff" }}>+</Text>
                     </TouchableOpacity>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    taskMenu: {
-        position: 'absolute',
-        width: '100%',
+    container: {
         flexDirection: 'row',
-        borderColor: 'white',
-        borderWidth: 3,
-        borderRadius: 5,
-        bottom: 2,
+        flex: 1,
     },
     textInputContainer: {
         flex: 3,
