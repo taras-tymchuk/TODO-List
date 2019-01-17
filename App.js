@@ -12,8 +12,8 @@ export default class App extends React.Component {
     this.state = {
       id: 2,
       tasks: [
-        { key: '1', description: 'task1' },
-        { key: '2', description: 'task2' },
+        { key: '1', description: 'task1', isDone: false },
+        { key: '2', description: 'task2', isDone: false },
 
       ]
     }
@@ -22,7 +22,11 @@ export default class App extends React.Component {
   addTask = (task) => {
     if (task != '') {
       this.state.id++;
-      this.state.tasks.push({ key: this.state.id.toString(), description: task });
+      this.state.tasks.push({
+        key: this.state.id.toString(),
+        description: task,
+        isDone: false
+      });
     }
   }
 

@@ -6,6 +6,7 @@ export default class AddTaskMenu extends Component {
         super(props);
         this.state = {
             text: '',
+            isDisabled: true,
         }
     }
 
@@ -13,7 +14,8 @@ export default class AddTaskMenu extends Component {
         this.props.onTaskAdded(this.state.text);
 
         this.setState({
-            text: ''
+            text: '',
+            isDisabled: true,
         });
     }
 
@@ -23,7 +25,10 @@ export default class AddTaskMenu extends Component {
                 <View style={styles.textInputContainer}>
                     <TextInput
                         style={{ fontSize: 14 }}
-                        onChangeText={(text) => this.setState({ text })}
+                        onChangeText={(inputText) => this.setState({
+                            text: inputText,
+                            isDisabled: inputText == '' ? true : false,
+                        })}
                         value={this.state.text}
                         placeholder="Enter new task..."
                         clearButtonMode="always"
@@ -31,8 +36,9 @@ export default class AddTaskMenu extends Component {
                 </View>
                 <View style={styles.addButtonContainer}>
                     <TouchableOpacity
-                        style={styles.addButton}
-                        onPress={this.submitAndClear}>
+                        style={[styles.addButton, { opacity: this.state.isDisabled ? 0.3 : 1 }]}
+                        onPress={this.submitAndClear}
+                        disabled={this.state.isDisabled}>
                         <Text style={{ fontSize: 20, color: "#fff" }}>+</Text>
                     </TouchableOpacity>
                 </View>
