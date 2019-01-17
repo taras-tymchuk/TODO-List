@@ -10,29 +10,21 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      data: [
-        { key: 'task1' },
-        { key: 'task2' },
-        { key: 'task3' },
-        { key: 'task4' },
-        { key: 'task5' },
-        { key: 'task6' },
-        { key: 'task7' },
-        { key: 'task8' },
-        { key: 'task9' },
-        { key: 'task10' },
-        { key: 'task11' },
-        { key: 'task12' },
-        { key: 'task13' },
-        { key: 'task14' },
-        { key: 'task15' },
-        { key: 'task16' },
-        { key: 'task17' },
-        { key: 'task18' },
+      id: 2,
+      tasks: [
+        { key: '1', description: 'task1' },
+        { key: '2', description: 'task2' },
+
       ]
     }
   }
 
+  addTask = (task) => {
+    if (task != '') {
+      this.state.id++;
+      this.state.tasks.push({ key: this.state.id.toString(), description: task });
+    }
+  }
 
   render() {
     return (
@@ -43,10 +35,10 @@ export default class App extends React.Component {
           />
         </View>
         <View style={styles.taskContainer}>
-          <TaskList data={this.state.data}></TaskList>
+          <TaskList data={this.state.tasks}></TaskList>
         </View>
         <KeyboardAvoidingView style={styles.taskInputContainer} behavior="padding" enabled>
-          <AddTaskMenu onTaskAdded={(text) => { }} />
+          <AddTaskMenu onTaskAdded={this.addTask} />
         </KeyboardAvoidingView>
       </View>
     );
@@ -56,7 +48,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'blanchedalmond',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -68,15 +60,14 @@ const styles = StyleSheet.create({
   taskContainer: {
     flex: 7,
     width: '100%',
-    marginBottom: '3%',
+    margin: '5%',
   },
   taskInputContainer: {
     flex: 1,
     width: '100%',
     flexDirection: 'row',
-    borderColor: 'white',
-    borderWidth: 3,
-    borderRadius: 5,
+    borderTopColor: '#ddd',
+    borderTopWidth: 2,
     bottom: 2,
   },
 });
