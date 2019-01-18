@@ -6,7 +6,7 @@ export default TaskList = (props) => {
     return (
         <FlatList
             data={props.data}
-            renderItem={({ item }) => <Task text={item.description}></Task>}
+            renderItem={({ item }) => <Task onDelete={props.onDelete} taskNumber={item.key} text={item.description}></Task>}
         />
     );
 }

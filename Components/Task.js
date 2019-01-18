@@ -9,6 +9,11 @@ export default class Task extends Component {
             isDone: false,
         }
     }
+
+    deleteTask = () => {
+        this.props.onDelete(this.props.taskNumber);
+    }
+
     render() {
         return (
             <View style={{
@@ -30,7 +35,7 @@ export default class Task extends Component {
                         width: 40,
                         height: 40,
                     }}
-                    onPress={null}
+                    onPress={this.deleteTask}
                 >
                     <Text style={{ color: '#fff', fontSize: 20 }}>X</Text>
                 </TouchableHighlight>

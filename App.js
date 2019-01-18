@@ -14,8 +14,7 @@ export default class App extends React.Component {
       tasks: [
         { key: '1', description: 'task1', isDone: false },
         { key: '2', description: 'task2', isDone: false },
-
-      ]
+      ],
     }
   }
 
@@ -30,6 +29,16 @@ export default class App extends React.Component {
     }
   }
 
+
+  onDelete = (taskNumber) => {
+    for (var i = 0; i < this.state.tasks.length; ++i) {
+      if (this.state.tasks[i].key == taskNumber) {
+        this.state.tasks.splice(i, 1);
+        break;
+      }
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -39,7 +48,7 @@ export default class App extends React.Component {
           />
         </View>
         <View style={styles.taskContainer}>
-          <TaskList data={this.state.tasks}></TaskList>
+          <TaskList onDelete={this.onDelete} data={this.state.tasks}></TaskList>
         </View>
         <KeyboardAvoidingView style={styles.taskInputContainer} behavior="padding" enabled>
           <AddTaskMenu onTaskAdded={this.addTask} />
