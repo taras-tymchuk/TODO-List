@@ -1,42 +1,46 @@
-import React from 'react';
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
-import TopPannel from 'ToDoProject/Components/TopPannel';
+import React, { Component } from 'react';
+import { StyleSheet, View, KeyboardAvoidingView, Alert, FlatList } from 'react-native';
 import AddTaskMenu from 'ToDoProject/Components/AddTaskMenu'
 import TaskList from 'ToDoProject/Components/TaskList';
 import { Header } from 'react-native-elements';
+import Task from 'ToDoProject/Components/Task'
 
-export default class App extends React.Component {
+
+export default class App extends Component {
   constructor(props) {
     super(props);
-
+    this.id = 0;
+    this.taskList = [];
     this.state = {
-      id: 2,
-      tasks: [
-        { key: '1', description: 'task1', isDone: false },
-        { key: '2', description: 'task2', isDone: false },
-      ],
+      tasks: this.taskList,
     }
   }
 
   addTask = (task) => {
     if (task != '') {
-      this.state.id++;
-      this.state.tasks.push({
-        key: this.state.id.toString(),
+      this.taskList.push({
+        key: this.id.toString(),
         description: task,
         isDone: false
       });
+      this.setState({
+        tasks: this.taskList,
+      });
+      this.id++;
     }
   }
 
-
   onDelete = (taskNumber) => {
-    for (var i = 0; i < this.state.tasks.length; ++i) {
-      if (this.state.tasks[i].key == taskNumber) {
-        this.state.tasks.splice(i, 1);
+    for (var i = 0; i < this.taskList.length; ++i) {
+      if (this.taskList[i].key === taskNumber) {
+        this.taskList.splice(i, 1);
         break;
       }
     }
+
+    this.setState({
+      tasks: this.taskList,
+    });
   }
 
   render() {
@@ -48,7 +52,10 @@ export default class App extends React.Component {
           />
         </View>
         <View style={styles.taskContainer}>
-          <TaskList onDelete={this.onDelete} data={this.state.tasks}></TaskList>
+          <TaskList
+            onDelete={this.onDelete}
+            tasks={this.state.tasks}
+            extraData={this.state}></TaskList>
         </View>
         <KeyboardAvoidingView style={styles.taskInputContainer} behavior="padding" enabled>
           <AddTaskMenu onTaskAdded={this.addTask} />
