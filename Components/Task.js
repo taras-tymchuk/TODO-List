@@ -7,11 +7,39 @@ export default class Task extends Component {
         super(props);
         this.state = {
             isDone: false,
+            textStyle: {
+                color: '#000',
+                textDecorationLine: 'none',
+            },
         }
     }
 
     deleteTask = () => {
         this.props.onDelete(this.props.taskNumber);
+    }
+
+    onDone = () => {
+        let done = !this.state.isDone;
+        this.state.isDone = !this.state.isDone;
+
+        if (done) {
+            this.setState({
+                isDone: done,
+                textStyle: {
+                    color: '#bbb',
+                    textDecorationLine: 'line-through',
+                }
+            });
+        }
+        else {
+            this.setState({
+                isDone: done,
+                textStyle: {
+                    color: '#000',
+                    textDecorationLine: 'none',
+                }
+            });
+        }
     }
 
     render() {
@@ -23,8 +51,10 @@ export default class Task extends Component {
             }}>
                 <CheckBox
                     title={this.props.text}
+                    textStyle={this.state.textStyle}
                     checked={this.state.isDone}
-                    onPress={() => { this.setState({ isDone: !this.state.isDone }) }}
+                    onPress={this.onDone}
+                    containerStyle={{ backgroundColor: '#fff', borderColor: '#fff' }}
                 />
 
                 <TouchableHighlight

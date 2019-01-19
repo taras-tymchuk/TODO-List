@@ -3,8 +3,8 @@ import { StyleSheet, View, KeyboardAvoidingView, Alert, FlatList } from 'react-n
 import AddTaskMenu from 'ToDoProject/Components/AddTaskMenu'
 import TaskList from 'ToDoProject/Components/TaskList';
 import { Header } from 'react-native-elements';
-import Task from 'ToDoProject/Components/Task'
-
+import Task from 'ToDoProject/Components/Task';
+import AppearingTextInput from 'ToDoProject/Components/AppearingTextInput';
 
 export default class App extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ export default class App extends Component {
     this.taskList = [];
     this.state = {
       tasks: this.taskList,
+      isInputVisible: false,
     }
   }
 
@@ -55,7 +56,8 @@ export default class App extends Component {
           <TaskList
             onDelete={this.onDelete}
             tasks={this.state.tasks}
-            extraData={this.state}></TaskList>
+            extraData={this.state}
+          />
         </View>
         <KeyboardAvoidingView style={styles.taskInputContainer} behavior="padding" enabled>
           <AddTaskMenu onTaskAdded={this.addTask} />
