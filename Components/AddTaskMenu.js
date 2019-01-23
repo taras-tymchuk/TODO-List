@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet, Text, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { connect } from 'react-redux';
 
-export default class AddTaskMenu extends Component {
+import { addTask } from 'ToDoProject/Actions/ActionCreators';
+
+class AddTaskMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,11 +14,10 @@ export default class AddTaskMenu extends Component {
     }
 
     submitAndClear = () => {
-        this.props.onTaskAdded(this.state.text);
+        this.props.addTask(this.state.text);
 
         this.setState({
             text: '',
-            isDisabled: true,
         });
     }
 
@@ -24,11 +26,8 @@ export default class AddTaskMenu extends Component {
             <View style={styles.container}>
                 <View style={styles.textInputContainer}>
                     <TextInput
-                        style={{ fontSize: 14 }}
-                        onChangeText={(inputText) => this.setState({
-                            text: inputText,
-                            isDisabled: inputText == '' ? true : false,
-                        })}
+                        style={styles.textInput}
+                        onChangeText={(inputText) => this.setState({ text: inputText })}
                         value={this.state.text}
                         placeholder="Enter new task..."
                         clearButtonMode="always"
@@ -36,9 +35,9 @@ export default class AddTaskMenu extends Component {
                 </View>
                 <View style={styles.addButtonContainer}>
                     <TouchableOpacity
-                        style={[styles.addButton, { opacity: this.state.isDisabled ? 0.3 : 1 }]}
+                        style={[styles.addButton, { opacity: this.state.text.trim() == '' ? 0.3 : 1 }]}
                         onPress={this.submitAndClear}
-                        disabled={this.state.isDisabled}>
+                        disabled={this.state.text.trim() == ''}>
                         <Text style={{ fontSize: 20, color: "#fff" }}>+</Text>
                     </TouchableOpacity>
                 </View>
@@ -50,23 +49,36 @@ export default class AddTaskMenu extends Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        alignItems: 'stretch',
         flex: 1,
     },
     textInputContainer: {
         flex: 3,
+    },
+    textInput: {
+        fontSize: 14,
+        justifyContent: 'center',
     },
     addButtonContainer: {
         flex: 1,
         alignItems: 'center',
     },
     addButton: {
-        alignItems: 'center',
         backgroundColor: '#00f',
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10,
-        width: 40,
         height: 40,
+        width: 40,
     },
 });
+
+mapStateToProps = () => {
+    return {};
+}
+
+mapDispatchToProps = {
+    addTask,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTaskMenu)

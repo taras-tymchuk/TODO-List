@@ -1,68 +1,37 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, Alert, FlatList } from 'react-native';
-import AddTaskMenu from 'ToDoProject/Components/AddTaskMenu'
-import TaskList from 'ToDoProject/Components/TaskList';
+import { View, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { Header } from 'react-native-elements';
-import Task from 'ToDoProject/Components/Task';
-import AppearingTextInput from 'ToDoProject/Components/AppearingTextInput';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import toDoReducer from 'ToDoProject/Reducers/Reducer';
+import TaskList from 'ToDoProject/Components/TaskList';
+import AddTaskMenu from 'ToDoProject/Components/AddTaskMenu';
+
+const store = createStore(toDoReducer);
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.id = 0;
-    this.taskList = [];
-    this.state = {
-      tasks: this.taskList,
-      isInputVisible: false,
-    }
-  }
-
-  addTask = (task) => {
-    if (task != '') {
-      this.taskList.push({
-        key: this.id.toString(),
-        description: task,
-        isDone: false
-      });
-      this.setState({
-        tasks: this.taskList,
-      });
-      this.id++;
-    }
-  }
-
-  onDelete = (taskNumber) => {
-    for (var i = 0; i < this.taskList.length; ++i) {
-      if (this.taskList[i].key === taskNumber) {
-        this.taskList.splice(i, 1);
-        break;
-      }
-    }
-
-    this.setState({
-      tasks: this.taskList,
-    });
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Header
-            centerComponent={{ text: 'TODO List', style: { color: '#fff', flex: 8, fontSize: 20, } }}
-          />
+      <Provider store={store}>
+        <View style={styles.container}>
+          <View style={styles.headerAndTasksContainer}>
+            <View style={styles.header}>
+              <Header centerComponent={{ text: 'TODO List', style: { color: '#fff', flex: 8, fontSize: 20, } }} />
+            </View>
+            <View style={styles.taskContainer}>
+              <TaskList />
+            </View>
+          </View>
+          <KeyboardAvoidingView style={styles.taskInputContainer} behavior="padding" enabled>
+            <AddTaskMenu />
+          </KeyboardAvoidingView>
         </View>
-        <View style={styles.taskContainer}>
-          <TaskList
-            onDelete={this.onDelete}
-            tasks={this.state.tasks}
-            extraData={this.state}
-          />
-        </View>
-        <KeyboardAvoidingView style={styles.taskInputContainer} behavior="padding" enabled>
-          <AddTaskMenu onTaskAdded={this.addTask} />
-        </KeyboardAvoidingView>
-      </View>
+      </Provider>
     );
   }
 }
@@ -70,26 +39,25 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  headerAndTasksContainer: {
+    flex: 10,
   },
   header: {
-    flex: 1,
-    width: '100%',
-    zIndex: 2,
+    borderBottomColor: '#eee',
+    borderBottomWidth: 2,
   },
   taskContainer: {
-    flex: 7,
-    width: '100%',
-    margin: '5%',
+    flex: 1,
   },
   taskInputContainer: {
     flex: 1,
-    width: '100%',
-    flexDirection: 'row',
     borderTopColor: '#ddd',
     borderTopWidth: 2,
-    bottom: 2,
+    bottom: 0,
+    borderColor: '#333',
+    borderWidth: 3,
   },
 });
