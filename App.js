@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Header } from 'react-native-elements';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -19,19 +20,30 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
+
           <View style={styles.headerAndTasksContainer}>
+
             <View style={styles.header}>
-              <Header centerComponent={{ text: 'TODO List', style: { color: '#fff', flex: 8, fontSize: 20, } }} />
+              <Header centerComponent={{
+                text: 'TODO List',
+                style: {
+                  color: '#fff',
+                  flex: 8,
+                  fontSize: 20,
+                }
+              }} />
             </View>
             <View style={styles.taskContainer}>
               <TaskList />
             </View>
+
           </View>
-          <KeyboardAvoidingView style={styles.taskInputContainer} behavior="padding" enabled>
+          <View style={styles.taskInputContainer}>
             <AddTaskMenu />
-          </KeyboardAvoidingView>
+          </View>
+          <KeyboardSpacer />
         </View>
-      </Provider>
+      </Provider >
     );
   }
 }
@@ -39,25 +51,26 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'stretch',
   },
   headerAndTasksContainer: {
-    flex: 10,
+    flex: 6,
   },
   header: {
     borderBottomColor: '#eee',
     borderBottomWidth: 2,
   },
   taskContainer: {
-    flex: 1,
+    flex: 3,
   },
   taskInputContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
     borderTopColor: '#ddd',
     borderTopWidth: 2,
-    bottom: 0,
-    borderColor: '#333',
-    borderWidth: 3,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 2,
   },
 });

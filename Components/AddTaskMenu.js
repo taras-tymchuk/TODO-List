@@ -49,18 +49,20 @@ class AddTaskMenu extends Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        alignItems: 'stretch',
         flex: 1,
     },
     textInputContainer: {
         flex: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     textInput: {
-        fontSize: 14,
-        justifyContent: 'center',
+        fontSize: 16,
+        textAlign: 'center',
     },
     addButtonContainer: {
         flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
     },
     addButton: {
@@ -68,8 +70,8 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        height: 40,
-        width: 40,
+        height: 45,
+        width: 45,
     },
 });
 
